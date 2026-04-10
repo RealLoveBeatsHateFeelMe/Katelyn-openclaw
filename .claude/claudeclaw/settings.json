@@ -1,0 +1,117 @@
+{
+  "model": "sonnet",
+  "api": "",
+  "fallback": {
+    "model": "",
+    "api": ""
+  },
+  "agentic": {
+    "enabled": true,
+    "defaultMode": "implementation",
+    "modes": [
+      {
+        "name": "planning",
+        "model": "opus",
+        "keywords": [
+          "plan",
+          "design",
+          "architect",
+          "strategy",
+          "approach",
+          "research",
+          "investigate",
+          "analyze",
+          "explore",
+          "understand",
+          "think",
+          "consider",
+          "evaluate",
+          "assess",
+          "review",
+          "system design",
+          "trade-off",
+          "decision",
+          "choose",
+          "compare",
+          "brainstorm",
+          "ideate",
+          "concept",
+          "proposal"
+        ],
+        "phrases": [
+          "how to implement",
+          "how should i",
+          "what's the best way to",
+          "should i",
+          "which approach",
+          "help me decide",
+          "help me understand"
+        ]
+      },
+      {
+        "name": "implementation",
+        "model": "sonnet",
+        "keywords": [
+          "implement",
+          "code",
+          "write",
+          "create",
+          "build",
+          "add",
+          "fix",
+          "debug",
+          "refactor",
+          "update",
+          "modify",
+          "change",
+          "deploy",
+          "run",
+          "execute",
+          "install",
+          "configure",
+          "test",
+          "commit",
+          "push",
+          "merge",
+          "release",
+          "generate",
+          "scaffold",
+          "setup",
+          "initialize"
+        ]
+      }
+    ]
+  },
+  "timezone": "UTC-7",
+  "timezoneOffsetMinutes": -420,
+  "heartbeat": {
+    "enabled": true,
+    "interval": 20,
+    "prompt": "检查献之是否在电脑前活跃。如果活跃，温柔提醒他休息眼睛、喝水。如果不活跃超过5分钟，跳过不发消息。",
+    "excludeWindows": [],
+    "forwardToTelegram": true
+  },
+  "telegram": {
+    "token": "",
+    "allowedUserIds": ["8612655727"]
+  },
+  "discord": {
+    "token": "",
+    "allowedUserIds": ["1420636197604167783"],
+    "listenChannels": []
+  },
+  "security": {
+    "level": "moderate",
+    "allowedTools": [],
+    "disallowedTools": []
+  },
+  "web": {
+    "enabled": false,
+    "host": "127.0.0.1",
+    "port": 4632
+  },
+  "stt": {
+    "baseUrl": "",
+    "model": ""
+  }
+}

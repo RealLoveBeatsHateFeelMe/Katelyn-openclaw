@@ -1,0 +1,82 @@
+---
+name: lzc-topic-radar
+description: Load at the start of every topic-radar cron run. Scans Reddit and X for trending celebrities suitable for Likely You engine demos, filters by public birthday and career longevity, and outputs 3-5 candidates to Telegram.
+---
+
+# Topic Radar — Daily Celebrity Scanner
+
+## Purpose
+
+Scan social media daily for trending celebrities who are good candidates for Likely You engine analysis demos. Output 3-5 candidates to Telegram with key data.
+
+## Data Sources
+
+### Reddit
+- **r/popheads** — music industry celebrities, album cycles, award seasons
+- **r/MMA** and **r/UFC** — fighters with public career arcs (core vertical)
+- **r/Entrepreneur** — founders with public timelines
+- **r/technology** — tech figures in the news
+
+### X (Twitter)
+- Trending topics related to celebrities
+- Viral moments, career milestones, controversies
+
+## Tools
+
+- `web_search` — scan subreddits and X for trending names
+- `web_fetch` — pull details on candidate celebrities
+
+## Candidate Filter Criteria
+
+Every candidate MUST pass ALL of these:
+
+| Criterion | Requirement |
+|-----------|-------------|
+| Public birthday | Full date (YYYY-MM-DD) must be verifiable from Wikipedia or official sources |
+| Career length | 10+ years of documented, verifiable career events |
+| Active discussion | Currently trending or in the news (reason for relevance) |
+| Demo suitability | Career arc has clear highs/lows that the engine can map to dayun/liunian |
+
+## Engine API Call
+
+For each candidate that passes filters, call the Likely You engine:
+
+```
+POST $LIKELYYOU_ENGINE_URL
+Content-Type: application/json
+X-Katelyn-Key: $LIKELYYOU_ENGINE_KEY
+
+{
+  "birth_date": "YYYY-MM-DD",
+  "is_male": true/false
+}
+```
+
+## Output Format (Telegram)
+
+Send to Telegram with this structure:
+
+```
+Topic Radar — [Date]
+
+1. [Name] (born YYYY-MM-DD)
+   Why trending: [1-sentence reason]
+   Demo potential: [High/Medium] — [why]
+
+2. [Name] (born YYYY-MM-DD)
+   Why trending: [1-sentence reason]
+   Demo potential: [High/Medium] — [why]
+
+3. ...
+```
+
+## Exclusions
+
+- Skip anyone without a confirmed public birthday
+- Skip anyone with < 10 years of career data
+- Skip anyone whose career arc is too flat (no clear peaks/valleys)
+- Skip anyone already analyzed in the last 7 days (check memory)
+
+## Frequency
+
+Run daily via cron. If no good candidates found, report "No strong candidates today" rather than forcing weak picks.

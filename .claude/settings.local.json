@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_discord_discord__reply",
+      "Bash(kill -0 18328)",
+      "Bash(xargs -r kill)",
+      "Bash(wsl -d Ubuntu -- bash -c \"sudo docker exec openclaw-fresh-openclaw-gateway-1 openclaw cron disable 0ae8999f-3937-4ada-ac35-43c27e5b8fed 2>&1 | grep -E 'enabled|id' | head -3 && echo --- && sudo docker exec openclaw-fresh-openclaw-gateway-1 openclaw cron disable 1b281fa8-6f86-4904-b047-0e7a1437e420 2>&1 | grep -E 'enabled|id' | head -3\")",
+      "Bash(wsl -d Ubuntu -- bash -c \"cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-distro-intel '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-topic-radar '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-celebrity-playbook '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-twitter-playbook '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-medium-playbook '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && cp -r /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-mma-strategy '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/' && ls '/mnt/c/Users/32247/Desktop/olivia openclaw/drafts/katelyn-archive/'\")",
+      "Bash(wsl -d Ubuntu -- bash -c \"rm -rf /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-distro-intel /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-topic-radar /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-celebrity-playbook /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-twitter-playbook /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-medium-playbook /home/xzwz778/.openclaw/workspace-katelyn/skills/katelyn-mma-strategy && ls /home/xzwz778/.openclaw/workspace-katelyn/skills/\")"
+    ]
+  }
+}

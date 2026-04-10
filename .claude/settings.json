@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"powercfg /a\")",
+      "Read(//c/Users/32247/**)",
+      "Read(//c/Users/32247/AppData/Local/Packages/**)",
+      "Bash(wsl -d Ubuntu -- bash -c 'cat /etc/wsl.conf 2>/dev/null || echo \"\"no wsl.conf\"\"')",
+      "Bash(wsl --shutdown)",
+      "Bash(wsl -d Ubuntu -- bash -c 'sudo docker exec openclaw-unified-openclaw-gateway-1 openclaw config set \"\"agents.defaults.models.\\\\\"\"anthropic/claude-sonnet-4-5\\\\\"\".params.cacheRetention\"\" long')",
+      "Bash(wsl -d Ubuntu -- bash -c 'sudo docker exec openclaw-unified-openclaw-gateway-1 openclaw config set agents.defaults.contextPruning.mode cache-ttl')",
+      "Bash(tasklist)",
+      "Bash(docker exec:*)",
+      "Bash(ls -la \"c:/Users/32247/Desktop/olivia openclaw/\"*.json)",
+      "Bash(ls -la \"c:/Users/32247/Downloads/\"*.json)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\32247",
+      "C:\\Users\\32247\\Desktop\\openclaw\\.claude\\claudeclaw",
+      "C:\\Users\\32247\\Desktop\\openclaw\\.claude\\claudeclaw\\prompts",
+      "c:\\Users\\32247\\Desktop\\openclaw\\.claude\\claudeclaw\\logs",
+      "c:\\Users\\32247\\Desktop\\olivia openclaw\\.claude\\claudeclaw"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/statusline.cjs"
+  },
+  "enabledPlugins": {
+    "dev-browser@dev-browser-marketplace": true,
+    "claude-mem@thedotmack": true,
+    "superpowers@superpowers-marketplace": true,
+    "ralph-loop@claude-plugins-official": true,
+    "hookify@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true
+  }
+}

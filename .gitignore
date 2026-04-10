@@ -1,0 +1,11 @@
+.env
+*.env
+node_modules/
+*.log
+.DS_Store
+__pycache__/
+*.pyc
+SECRETS.md
+.claude/claudeclaw/whisper/
+.claude/claudeclaw/daemon.pid
+.claude/claudeclaw/logs/
