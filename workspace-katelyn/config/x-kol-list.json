@@ -1,0 +1,349 @@
+{
+  "version": 1,
+  "last_updated": "2026-04-11",
+  "note": "v3: 补全到 ~40 个 builder",
+  "kols": [
+    {
+      "handle": "0xajc",
+      "name": "0xajc",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "献之最喜欢的类型",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "gabriel1",
+      "name": "Gabriel Petersson",
+      "vertical": "young_builder",
+      "followers_approx": 50000,
+      "notes": "22岁, 前 OpenAI Sora / Midjourney",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "im_roy_lee",
+      "name": "Roy Lee",
+      "vertical": "young_builder",
+      "followers_approx": 80000,
+      "notes": "21岁, Cluely CEO, $6M ARR / 2个月, a16z",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "zach_yadegari",
+      "name": "Zach Yadegari",
+      "vertical": "young_builder",
+      "followers_approx": 25000,
+      "notes": "18岁, Cal AI, $40M+ revenue",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "arlanr",
+      "name": "Arlan Rakhmetzhanov",
+      "vertical": "young_builder",
+      "followers_approx": 8000,
+      "notes": "18岁, Nozomio/Nia, YC S25, $6.2M seed",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "BrendanFoody",
+      "name": "Brendan Foody",
+      "vertical": "young_builder",
+      "followers_approx": 90000,
+      "notes": "22岁, Mercor CEO, $250M 估值",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "michaelltruell",
+      "name": "Michael Truell",
+      "vertical": "young_builder",
+      "followers_approx": 50000,
+      "notes": "Cursor CEO, AI coding tool, $30B 估值",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "pbteja1998",
+      "name": "Bhanu Teja P",
+      "vertical": "young_builder",
+      "followers_approx": 35000,
+      "notes": "SiteGPT, $15K→$250K MRR, 独立开发",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "marc_louvion",
+      "name": "Marc Lou",
+      "vertical": "young_builder",
+      "followers_approx": 170000,
+      "notes": "ShipFast/CodeFast, #buildinpublic 活跃",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "swyx",
+      "name": "Shawn Wang",
+      "vertical": "established_builder",
+      "followers_approx": 200000,
+      "notes": "AI engineering, Latent Space, smol.ai",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "dannypostmaa",
+      "name": "Danny Postma",
+      "vertical": "established_builder",
+      "followers_approx": 30000,
+      "notes": "HeadshotPro, AI 产品被收购",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "alexalbert__",
+      "name": "Alex Albert",
+      "vertical": "ai_tools",
+      "followers_approx": 127000,
+      "notes": "Anthropic Claude Relations",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "zarazhangrui",
+      "name": "Zara Zhang",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "builder curator, 策展了 25 个 builder 账号",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "elvissun",
+      "name": "Elvis",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "solo founder, agent swarm 被 Karpathy 夸 brilliant",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "RenjackAIDevv",
+      "name": "Renjack",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "Day 1 builder, 用 AI 做游戏",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "PrajwalTomar_",
+      "name": "Prajwal Tomar",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "每月 ship 2 个 app, build in public",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "karunkaushik_",
+      "name": "Karun Kaushik",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "辍学做 AI + compliance",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "istdrc",
+      "name": "RC / stdrc",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "前 Moonshot AI, 做 Slock agent-human 协作",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "chddaniel",
+      "name": "Daniel Ch",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "Shipper, 自主 AI 公司建造者",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "corbin_braun",
+      "name": "Corbin Braun",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "Cursor King, AI coding 领域",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "jackfriks",
+      "name": "Jack Friks",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "solo apps builder",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "FrancescoD_Ales",
+      "name": "Francesco D Alessio",
+      "vertical": "young_builder",
+      "followers_approx": 39000,
+      "notes": "ToolFinder, AI 工具发现",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "maccaw",
+      "name": "Alex MacCaw",
+      "vertical": "young_builder",
+      "followers_approx": 39000,
+      "notes": "前 Clearbit, 新 AI 产品",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "sehurlburt",
+      "name": "Stephanie Hurlburt",
+      "vertical": "young_builder",
+      "followers_approx": 32000,
+      "notes": "vibecoding 工程师",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "yoheinakajima",
+      "name": "Yohei Nakajima",
+      "vertical": "established_builder",
+      "followers_approx": 123000,
+      "notes": "BabyAGI, 开源 AI agent",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "csallen",
+      "name": "Courtland Allen",
+      "vertical": "established_builder",
+      "followers_approx": 68000,
+      "notes": "Indie Hackers 创始人",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "simonw",
+      "name": "Simon Willison",
+      "vertical": "established_builder",
+      "followers_approx": 132000,
+      "notes": "Datasette, LLM 实验",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "tibo_maker",
+      "name": "Tibo",
+      "vertical": "established_builder",
+      "followers_approx": 186000,
+      "notes": "前 Tweet Hunter, 多 SaaS",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "antonosika",
+      "name": "Anton Osika",
+      "vertical": "young_builder",
+      "followers_approx": 75000,
+      "notes": "Lovable.dev 创始人",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "nocodelife",
+      "name": "nocodelife",
+      "vertical": "young_builder",
+      "followers_approx": 30000,
+      "notes": "AI nocode 工具",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "gregisenberg",
+      "name": "Greg Isenberg",
+      "vertical": "established_builder",
+      "followers_approx": 200000,
+      "notes": "startup ideas, 年轻 founder 话题",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "mckaywrigley",
+      "name": "McKay Wrigley",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "builder 话题, golden age for builders",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "yongfook",
+      "name": "Jon Yongfook",
+      "vertical": "established_builder",
+      "followers_approx": null,
+      "notes": "indie hacker, Bannerbear",
+      "priority": "medium",
+      "active": true
+    },
+    {
+      "handle": "rileybrown",
+      "name": "Riley Brown",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "vibecode builder",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "omooretweets",
+      "name": "O Moore",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "Claude Code agentic workspace",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "manto_vincenzo",
+      "name": "Vincenzo Manto",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "AI-Clean, 1K 用户",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "aka4uh",
+      "name": "ieuan",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "Precog, PDF to AI docs",
+      "priority": "high",
+      "active": true
+    },
+    {
+      "handle": "gratia_001",
+      "name": "Oge",
+      "vertical": "young_builder",
+      "followers_approx": null,
+      "notes": "AI Clipping Agent",
+      "priority": "high",
+      "active": true
+    }
+  ]
+}

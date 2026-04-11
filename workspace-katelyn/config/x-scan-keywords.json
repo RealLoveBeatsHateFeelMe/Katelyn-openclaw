@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "last_updated": "2026-04-11",
+  "note": "v2: 只保留能搜到推文的关键词。话题搜索在 Brave 上返回社区页不返回推文，所以大部分关键词已删。",
+  "supplementary_searches": [
+    "site:x.com Claude Code shipped",
+    "site:x.com vibe coding built",
+    "site:x.com AI agent builder shipped"
+  ],
+  "rotate_per_cycle": {
+    "builders": 12,
+    "supplementary": 1
+  }
+}
