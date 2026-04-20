@@ -1,93 +1,46 @@
 ---
 name: x-kol-scan
-description: Load at the start of every x-kol-scan cron run. Uses twitterapi.io to fetch recent tweets from builder accounts. Filters by reply count (<100), originality. Scores using x-scoring. Stores in state/x-processed-posts.json.
+description: Two-pass X scan using twitterapi.io. Pass 1 probes each builder with count=1 to detect new posts via statusesCount diff. Pass 2 fetches only the diff. Saves 60%+ API cost compared to always fetching N tweets per builder.
 ---
 
-# X KOL Scan — 扫描工作流（v3 twitterapi.io）
+# X KOL Scan — 两步扫描法（v4）
 
-## 核心任务
+## 核心思路
 
-每轮扫描 10-12 个 builder 的最新推文，评分后存入 state。
+**先看有没有新东西，有再拿。** 不像之前每次都拉 5 条（很多是旧的）。
+
+twitterapi.io 计费按返回的推文数。statusesCount 是这个人的总推文数（包括 reply/quote）。对比上次看到的 statusesCount，知道这段时间发了多少条。
 
 ## 触发
 
-Cron：`*/45 * * * *`
+Cron: `30 9,14,20 * * *` PT 时区（每天 3 次：9:30 / 14:30 / 20:30）
 
 ## API 配置
 
 ```
-API: twitterapi.io
-Key: new1_2c8f68c420a748aeb68cca497306f4d8
-Header: x-api-key
 Endpoint: https://api.twitterapi.io/twitter/user/last_tweets
+Header: x-api-key: new1_2c8f68c420a748aeb68cca497306f4d8
+Params: userName={handle}&count={N}
 ```
 
-## 工作流
+**Rate limit:** 免费/低额用户每 5 秒 1 个请求。**每次 curl 之间 sleep 6**。
 
-### Step 1：读配置
+## State Schema
 
-- 本 skill + `x-scoring`
-- `config/x-kol-list.json` — builder 列表
-- `state/x-processed-posts.json` — 已处理帖子（去重）
-
-### Step 2：选本轮扫描目标
-
-从 x-kol-list.json 选 10-12 个 builder（轮换，优先 high priority + 上轮没扫的）
-
-### Step 3：调 API 拿推文
-
-对每个 builder 执行：
-
-```bash
-curl -s -H "x-api-key: new1_2c8f68c420a748aeb68cca497306f4d8" \
-n**重要：每次 curl 调用之间必须等 6 秒（sleep 6），否则会触发 rate limit。** 免费用户 QPS 限制是每 5 秒 1 个请求。
-  "https://api.twitterapi.io/twitter/user/last_tweets?userName={handle}&count=5"
-```
-
-返回 JSON，每条推文包含：
-- `text` — 推文内容
-- `replyCount` — 回复数
-- `likeCount` — 点赞数
-- `retweetCount` — 转发数
-- `viewCount` — 浏览数
-- `isReply` — 是否是回复
-- `createdAt` — 发布时间
-- `author.followers` — 粉丝数
-- `url` — 推文链接
-
-### Step 4：过滤
-
-对 API 返回的每条推文：
-
-- `isReply == true` → 跳过（是回复不是原创）
-- `type != "tweet"` → 跳过（转发等）
-- `replyCount > 100` → 跳过（太拥挤）
-- 发布时间 > 7 天前 → 跳过
-- 内容和 building/AI/shipping 完全无关的日常帖 → 跳过
-
-### Step 5：去重
-
-检查 tweet ID 是否已在 x-processed-posts.json 中。已有 → 跳过。
-
-### Step 6：评分
-
-用 x-scoring 公式。从 API 数据直接读取精确数值：
-
-```
-topic_relevance (0-5) — 帖子内容和 AI/building/shipping 的相关度
-author_size (0-3) — author.followers
-reply_window (0-5) — replyCount 越少越好
-recency (0-3) — createdAt 越新越好
-```
-
-### Step 7：存储
-
-写入 state/x-processed-posts.json。格式：
+`state/x-processed-posts.json`：
 
 ```json
 {
   "last_scan": "ISO timestamp",
-  "scanned_handles": ["handle1", "handle2"],
+  "scanned_handles": ["..."],
+  "builder_state": {
+    "elvissun": {
+      "last_seen_tweet_id": "2042798244845981697",
+      "last_statuses_count": 7520,
+      "last_probed_at": "ISO"
+    },
+    "gabriel1": {...}
+  },
   "posts": [
     {
       "id": "tweet_id",
@@ -98,7 +51,7 @@ recency (0-3) — createdAt 越新越好
       "reply_count": 2,
       "like_count": 3,
       "view_count": 1984,
-      "posted_at": "ISO timestamp",
+      "posted_at": "ISO",
       "is_original": true,
       "x_opportunity_score": 12,
       "status": "candidate"
@@ -107,20 +60,120 @@ recency (0-3) — createdAt 越新越好
 }
 ```
 
-### Step 8：紧急推送
+`builder_state` 是新加的字段。每次扫描更新。
 
-score >= 12 且 reply_count <= 5 且 age < 1h → 立即推送 Telegram
+## 工作流
 
-### Step 9：清理
+### Step 1：读 skill + 配置
 
-删除 7 天以上记录。更新 scanned_handles。
+- 本 skill + `x-scoring`
+- `config/x-kol-list.json` — 38 个 builder
+- `state/x-processed-posts.json` — 已处理 + builder_state
 
-## 注意
+### Step 2：第一步扫描 — 探测（probe）
 
-- 不要用 web_search，直接用 exec/curl 调 twitterapi.io
-- 每个 builder 只拿 5 条最新推文（count=5），省 API credits
-- 每轮 10-12 个 builder = 10-12 次 API 调用 = 50-60 条推文待评分
+对每个 active builder（最多 38 个），按顺序：
+
+```bash
+curl -s -H "x-api-key: $KEY" "https://api.twitterapi.io/twitter/user/last_tweets?userName={handle}&count=1"
+sleep 6  # rate limit
+```
+
+返回 JSON 里：
+- `data.tweets[0].id` → 最新 tweet ID
+- `data.tweets[0].author.statusesCount` → 总推文数
+
+**对比 builder_state[handle]：**
+- 如果不存在（首次扫该 builder）→ 标记 `is_first_scan: true`，diff 设 5（默认拉 5 条）
+- 如果存在：
+  - `current_count = data.tweets[0].author.statusesCount`
+  - `last_count = builder_state[handle].last_statuses_count`
+  - `diff = current_count - last_count`
+  - diff <= 0 → 跳过这个 builder（没新东西，省 API）
+  - diff > 0 → 进入第二步
+
+**更新 builder_state[handle]**：
+- `last_statuses_count = current_count`
+- `last_seen_tweet_id = data.tweets[0].id`
+- `last_probed_at = now`
+
+### Step 3：第二步扫描 — 精确拉取（fetch）
+
+仅对 diff > 0 的 builder：
+
+```bash
+N=$(min(diff, 5))
+curl -s -H "x-api-key: $KEY" "https://api.twitterapi.io/twitter/user/last_tweets?userName={handle}&count=N"
+sleep 6
+```
+
+最多 5 条（防爆发狂发）。
+
+### Step 4：过滤每条新推文
+
+对 fetch 回来的每条推文：
+- `isReply == true` → 跳过（reply 不要）
+- `type != "tweet"` → 跳过（转发不要）
+- `replyCount > 100` → 跳过（太拥挤）
+- 发布时间 > 7 天前 → 跳过（API 计费但还是过滤）
+- 已在 posts 里（按 tweet ID 去重）→ 跳过
+
+### Step 5：评分
+
+用 `x-scoring` 公式。score >= 5 标 candidate，否则 skipped。
+
+### Step 6：存储
+
+- 新推文加到 posts 数组
+- 更新 builder_state
+- 更新 last_scan 和 scanned_handles
+
+### Step 7：紧急推送
+
+如果有 candidate score >= 12 且 reply_count <= 5 且 age < 1h → 立即 Telegram 推送：
+
+```
+🚨 X 黄金窗口
+
+@{handle} ({followers} followers)
+💬 {reply_count} · ⏰ {age}
+"{text 前 100 字}"
+
+🔗 {url}
+```
+
+### Step 8：清理
+
+- 删除 posts 里 7 天前的记录
+- builder_state 全保留
+
+## 成本估算
+
+按当前 38 个 builder：
+- 每次扫描：38 个 probe + ~14 个 fetch × 平均 2 条 = ~66 推文
+- 3 次/天 = 198 推文
+- 30 天 = 5,940 推文
+- $0.00015 × 5940 = **$0.89/月**
+
+$5 充值 = 5+ 个月用量。
+
+## 错误处理
+
+- API 返回 `Credits is not enough` → 整轮停止，记录错误，下轮重试
+- 单个 curl 超时 → 跳过该 builder，继续下一个
+- JSON 解析失败 → 跳过该 builder
+- builder 不存在（404）→ 在 builder_state 里标记 `error: "not_found"`，下次跳过
+
+## 绝对不做
+
+- 不每次都拉 5 条（用 diff 判断）
+- 不调 web_search（用 curl）
+- 不写 reply 草稿（briefing 的事）
+- 不推送 briefing（briefing 的事）
 
 ## 更新记录
 
-- 2026-04-11：v3 — 切换到 twitterapi.io，替代 Brave Search
+- 2026-04-12 v4：两步扫描，statusesCount diff 决定拉多少
+- 2026-04-11 v3：换到 twitterapi.io
+- 2026-04-11 v2：用户名搜索为主
+- 2026-04-10 v1：首版
